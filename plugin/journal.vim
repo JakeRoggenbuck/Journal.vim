@@ -22,12 +22,18 @@ sys.path.insert(0, python_root_dir)
 EOF
 endfunc
 
-
 call s:SourcePython()
 
-
-func! g:NewDraft(...)
+func! g:OpenJournal(...)
 py3 << EOF
 from journal import Journals
+
+journals_dir = vim.eval('g:journals_directory')
+journals = Journals(journals_dir)
+path = journals.open()
+vim.command(f":e {path}")
+
 EOF
 endfunc
+
+command! -bar -bang Journal call OpenJournal()

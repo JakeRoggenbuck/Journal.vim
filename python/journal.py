@@ -1,9 +1,14 @@
 from datetime import date
 from os import path
 
+
+def use_template(date: str):
+    return f"Journal entry {date}"
+
+
 class Journals:
     def __init__(self, journals_path):
-        self.journals_path  = journals_path
+        self.journals_path = journals_path
 
     @staticmethod
     def get_date():
@@ -17,19 +22,18 @@ class Journals:
         return path.join(self.journals_path, name)
 
     def get_todays_filename(self):
-        self.wrap_date_for_filename(self.get_date())
+        return self.wrap_date_for_filename(self.get_date())
 
     def check_todays_journal(self):
-        return path.isfile(self.get_filepath())
+        return path.isfile(self.get_filepath(self.get_todays_filename()))
 
     def new(self):
-        with open(self.get_filepath()) as file:
-        # Create new journal
+        todays_file = self.get_todays_filename()
+        with open(self.get_filepath(todays_file)) as file:
+            date = str(self.get_date())
+            file.write(use_template(date))
 
     def open(self):
-
-        # Pass the path to vim to open in a buffer
-
-    def startup(self):
         if not self.check_todays_journal():
             self.new()
+        return self.get_filepath(self.get_todays_filename())
