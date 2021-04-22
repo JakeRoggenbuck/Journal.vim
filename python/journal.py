@@ -29,7 +29,7 @@ class Journals:
 
     def new(self):
         todays_file = self.get_todays_filename()
-        with open(self.get_filepath(todays_file)) as file:
+        with open(self.get_filepath(todays_file), "w") as file:
             date = str(self.get_date())
             file.write(use_template(date))
 
