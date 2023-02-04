@@ -54,4 +54,4 @@ class Journals:
                 num = text.count(word)
 
                 if num > 0:
-                    yield (num, path)
+                    yield (num, j_path)
