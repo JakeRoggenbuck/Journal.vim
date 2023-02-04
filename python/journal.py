@@ -1,6 +1,6 @@
 from datetime import date
 from os import path, listdir
-from typing import Tuple, Iterator
+from typing import Tuple, List
 
 
 def use_template(date: str):
@@ -50,6 +50,7 @@ class Journals:
         return self.get_filepath(self.get_todays_filename())
 
     def search_single_word(self, word: str):
+        matching_paths = []
         paths = listdir(self.journals_path)
         for j_path in paths:
             full_path = path.join(self.journals_path, j_path)
@@ -58,16 +59,18 @@ class Journals:
                 num = text.count(word)
 
                 if num > 0:
-                    yield (num, full_path)
+                    matching_paths.append((num, full_path))
 
-    def open_journal_viewer(self, entries: Iterator[Tuple[int, str]]):
+        return matching_paths
+
+    def open_journal_viewer(self, entries: List[Tuple[int, str]]):
         with open(self.outfile_path, "w") as file:
             file.write("=== Journal Viewer ===\n\n")
-            try:
-                entries.__next__()
+
+            if len(entries) > 0:
                 file.write("#\tcount\tpath\n")
                 for n, entry in enumerate(entries):
                     count = str(entry[0]).ljust(5)
                     file.write(f"{n}.\t{count}\t{entry[1]}\n")
-            except StopIteration:
+            else:
                 file.write("Search term not found\n")
