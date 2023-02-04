@@ -36,4 +36,21 @@ vim.command(f":e {path}")
 EOF
 endfunc
 
+func! g:SearchJournal(...)
+py3 << EOF
+from journal import Journals
+
+journals_dir = vim.eval('g:journals_directory')
+journals = Journals(journals_dir)
+
+search_term = vim.eval("a:1")
+
+entries = journals.search_single_word(search_term)
+journals.open_journal_viewer(entries)
+vim.command(f":e {journals.outfile_path}")
+
+EOF
+endfunc
+
 command! -bar -bang Journal call OpenJournal()
+command! -bar -bang -nargs=? JournalSearch call SearchJournal(<q-args>)
