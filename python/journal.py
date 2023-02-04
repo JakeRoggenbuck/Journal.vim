@@ -1,5 +1,5 @@
 from datetime import date
-from os import path
+from os import path, listdir
 
 
 def use_template(date: str):
@@ -7,7 +7,7 @@ def use_template(date: str):
 
 
 class Journals:
-    def __init__(self, journals_path):
+    def __init__(self, journals_path: str):
         self.journals_path = journals_path
 
     @staticmethod
@@ -18,7 +18,7 @@ class Journals:
     def wrap_date_for_filename(date):
         return f"journal_{date}.md"
 
-    def get_filepath(self, name):
+    def get_filepath(self, name: str):
         return path.join(self.journals_path, name)
 
     def get_todays_filename(self):
@@ -37,3 +37,13 @@ class Journals:
         if not self.check_todays_journal():
             self.new()
         return self.get_filepath(self.get_todays_filename())
+
+    def search_single_word(self, word: str):
+        paths = listdir(self.journals_path)
+        for j_path in paths:
+            with open(j_path) as file:
+                text = file.read()
+                num = text.count(word)
+
+                if num > 0:
+                    yield (num, path)
