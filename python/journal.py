@@ -65,4 +65,5 @@ class Journals:
             file.write("=== Journal Viewer ===\n\n")
             file.write("#\tcount\tpath")
             for n, entry in enumerate(entries):
-                file.write(f"{n}.\t{entry[0]}\t{entry[1]}\n")
+                count = str(entry[0]).ljust(5)
+                file.write(f"{n}.\t{count}\t{entry[1]}\n")
