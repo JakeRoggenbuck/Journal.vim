@@ -16,4 +16,3 @@ let g:journals_directory = "/path/to/journals_directory"
 
 ## Future features
 - A search by date or relative date (ex. "last friday")
-- Keyword search (ex. "Exam", "Weekend")
