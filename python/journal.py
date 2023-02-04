@@ -1,5 +1,6 @@
 from datetime import date
 from os import path, listdir
+from typing import Tuple, List
 
 
 def use_template(date: str):
@@ -7,6 +8,8 @@ def use_template(date: str):
 
 
 class Journals:
+    outfile_path = "/tmp/journal-viewer-temp-file.md"
+
     def __init__(self, journals_path: str):
         self.journals_path = journals_path
 
@@ -55,3 +58,10 @@ class Journals:
 
                 if num > 0:
                     yield (num, j_path)
+
+    def open_journal_viewer(self, entries: List[Tuple[int, str]]):
+
+        with open(outfile_path, "w") as file:
+            file.write("# Journal Viewer\n\n")
+            for n, entry in enumerate(entries):
+                file.write(f"{n}. {entry[0]} {entry[1]}\n")
