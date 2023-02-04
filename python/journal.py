@@ -49,7 +49,7 @@ class Journals:
     def search_single_word(self, word: str):
         paths = listdir(self.journals_path)
         for j_path in paths:
-            with open(j_path) as file:
+            with open(path.join(self.journals_path, j_path)) as file:
                 text = file.read()
                 num = text.count(word)
 
