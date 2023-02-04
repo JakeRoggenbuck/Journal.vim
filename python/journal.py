@@ -11,20 +11,28 @@ class Journals:
         self.journals_path = journals_path
 
     @staticmethod
-    def get_date():
-        return date.today().strftime("%b-%d-%Y")
+    def convert_date(date_: date) -> str:
+        """Works for arbitrary date objects
+
+        To be used later in date search / date summary
+        """
+        return date_.strftime("%b-%d-%Y")
+
+    @classmethod
+    def get_date(cls):
+        return cls.convert_date(date.today())
 
     @staticmethod
-    def wrap_date_for_filename(date):
+    def wrap_date_for_filename(date) -> str:
         return f"journal_{date}.md"
 
     def get_filepath(self, name: str):
         return path.join(self.journals_path, name)
 
-    def get_todays_filename(self):
+    def get_todays_filename(self) -> str:
         return self.wrap_date_for_filename(self.get_date())
 
-    def check_todays_journal(self):
+    def check_todays_journal(self) -> bool:
         return path.isfile(self.get_filepath(self.get_todays_filename()))
 
     def new(self):
