@@ -1,6 +1,6 @@
 from datetime import date
 from os import path, listdir
-from typing import Tuple, List
+from typing import Tuple, Iterator
 
 
 def use_template(date: str):
@@ -60,13 +60,14 @@ class Journals:
                 if num > 0:
                     yield (num, full_path)
 
-    def open_journal_viewer(self, entries: List[Tuple[int, str]]):
+    def open_journal_viewer(self, entries: Iterator[Tuple[int, str]]):
         with open(self.outfile_path, "w") as file:
             file.write("=== Journal Viewer ===\n\n")
-            if len(entries) > 0:
+            try:
+                entries.__next__()
                 file.write("#\tcount\tpath\n")
                 for n, entry in enumerate(entries):
                     count = str(entry[0]).ljust(5)
                     file.write(f"{n}.\t{count}\t{entry[1]}\n")
-            else:
+            except StopIteration:
                 file.write("Search term not found\n")
