@@ -47,7 +47,7 @@ search_term = vim.eval("a:1")
 
 entries = journals.search_single_word(search_term)
 journals.open_journal_viewer(entries)
-vim.command(f":e {journal.outfile_path}")
+vim.command(f":e {journals.outfile_path}")
 
 EOF
 endfunc
