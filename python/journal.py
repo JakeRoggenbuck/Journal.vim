@@ -63,7 +63,7 @@ class Journals:
     def open_journal_viewer(self, entries: List[Tuple[int, str]]):
         with open(self.outfile_path, "w") as file:
             file.write("=== Journal Viewer ===\n\n")
-            file.write("#\tcount\tpath")
+            file.write("#\tcount\tpath\n")
             for n, entry in enumerate(entries):
                 count = str(entry[0]).ljust(5)
                 file.write(f"{n}.\t{count}\t{entry[1]}\n")
