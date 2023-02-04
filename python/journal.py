@@ -52,12 +52,13 @@ class Journals:
     def search_single_word(self, word: str):
         paths = listdir(self.journals_path)
         for j_path in paths:
-            with open(path.join(self.journals_path, j_path)) as file:
+            full_path = path.join(self.journals_path, j_path)
+            with open(full_path) as file:
                 text = file.read()
                 num = text.count(word)
 
                 if num > 0:
-                    yield (num, j_path)
+                    yield (num, full_path.absolute())
 
     def open_journal_viewer(self, entries: List[Tuple[int, str]]):
         with open(self.outfile_path, "w") as file:
