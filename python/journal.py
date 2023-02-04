@@ -58,7 +58,7 @@ class Journals:
                 num = text.count(word)
 
                 if num > 0:
-                    yield (num, full_path.absolute())
+                    yield (num, full_path)
 
     def open_journal_viewer(self, entries: List[Tuple[int, str]]):
         with open(self.outfile_path, "w") as file:
