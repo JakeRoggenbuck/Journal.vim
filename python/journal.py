@@ -8,7 +8,7 @@ def use_template(date: str):
 
 
 class Journals:
-    outfile_path = "/tmp/journal-viewer-temp-file.md"
+    outfile_path = "/tmp/journal-viewer-temp-file"
 
     def __init__(self, journals_path: str):
         self.journals_path = journals_path
@@ -62,6 +62,6 @@ class Journals:
 
     def open_journal_viewer(self, entries: List[Tuple[int, str]]):
         with open(self.outfile_path, "w") as file:
-            file.write("# Journal Viewer\n\n")
+            file.write("=== Journal Viewer ===\n\n")
             for n, entry in enumerate(entries):
                 file.write(f"{n}. {entry[0]} {entry[1]}\n")
