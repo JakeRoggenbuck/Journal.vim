@@ -47,7 +47,7 @@ search_term = vim.eval("a:1")
 
 entries = journals.search_single_word(search_term)
 for entry in entries:
-	print(entry)
+	print(entry[1].absolute())
 
 EOF
 endfunc
