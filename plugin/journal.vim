@@ -9,6 +9,14 @@ endif
 
 let g:loaded_journal_plugin = 1
 
+if !exists('g:journals_date_format')
+	let g:journals_date_format = '%b-%d-%Y'
+endif
+
+if !exists('g:journals_title_template')
+	let g:journals_title_template = 'Journal entry {date}'
+endif
+
 let s:plugin_root_dir = fnamemodify(resolve(expand('<sfile>:p')), ':h')
 
 func! s:SourcePython()
@@ -29,7 +37,9 @@ py3 << EOF
 from journal import Journals
 
 journals_dir = vim.eval('g:journals_directory')
-journals = Journals(journals_dir)
+date_format = vim.eval('g:journals_date_format')
+title_template = vim.eval('g:journals_title_template')
+journals = Journals(journals_dir, date_format, title_template)
 path = journals.open()
 vim.command(f":e {path}")
 
