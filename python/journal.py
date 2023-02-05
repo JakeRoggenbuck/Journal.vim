@@ -2,16 +2,13 @@ from datetime import date
 from os import path, listdir
 from typing import Tuple, List
 
-
-def use_template(date: str):
-    return f"Journal entry {date}"
-
-
 class Journals:
     outfile_path = "/tmp/journal-viewer-temp-file"
 
-    def __init__(self, journals_path: str):
+    def __init__(self, journals_path, date_format, title_template):
         self.journals_path = journals_path
+        self.date_format = date_format
+        self.title_template = title_template
 
     @staticmethod
     def convert_date(date_: date) -> str:
@@ -21,9 +18,11 @@ class Journals:
         """
         return date_.strftime("%b-%d-%Y")
 
-    @classmethod
-    def get_date(cls):
-        return cls.convert_date(date.today())
+    def get_date(self):
+        return date.today().strftime(self.date_format)
+
+    def use_template(self, date: str):
+        return self.title_template.format(date=date)
 
     @staticmethod
     def wrap_date_for_filename(date) -> str:
@@ -42,7 +41,7 @@ class Journals:
         todays_file = self.get_todays_filename()
         with open(self.get_filepath(todays_file), "w") as file:
             date = str(self.get_date())
-            file.write(use_template(date))
+            file.write(self.use_template(date))
 
     def open(self):
         if not self.check_todays_journal():
