@@ -18,8 +18,8 @@ let g:journals_title_template = 'Journal entry {date}'
 ## Commands
 | Command               | Description                 |
 |-----------------------|-----------------------------|
-| :Journal              | Open the journal for today  |
-| :JournalSearch <word> | Keyword search for journals |
+| Journal              | Open the journal for today  |
+| JournalSearch <word> | Keyword search for journals |
 
 ## Future features
 - A search by date or relative date (ex. "last friday")
